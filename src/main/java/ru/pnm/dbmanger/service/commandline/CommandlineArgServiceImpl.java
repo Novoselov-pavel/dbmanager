@@ -3,7 +3,7 @@ package ru.pnm.dbmanger.service.commandline;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.stereotype.Service;
-import ru.pnm.dbmanger.model.CommandLineArgs;
+import ru.pnm.dbmanger.model.commandline.CommandLineArgs;
 
 import java.util.Arrays;
 

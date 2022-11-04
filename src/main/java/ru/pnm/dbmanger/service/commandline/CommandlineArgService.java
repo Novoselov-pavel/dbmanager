@@ -1,6 +1,6 @@
 package ru.pnm.dbmanger.service.commandline;
 
-import ru.pnm.dbmanger.model.CommandLineArgs;
+import ru.pnm.dbmanger.model.commandline.CommandLineArgs;
 
 /**
  * Получает настройки из аргументов командной строки

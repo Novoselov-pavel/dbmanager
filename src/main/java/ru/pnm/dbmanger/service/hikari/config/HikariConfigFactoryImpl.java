@@ -2,7 +2,7 @@ package ru.pnm.dbmanger.service.hikari.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import org.springframework.stereotype.Service;
-import ru.pnm.dbmanger.model.CommandLineArgs;
+import ru.pnm.dbmanger.model.commandline.CommandLineArgs;
 
 /**
  * @author Новоселов Павел

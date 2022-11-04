@@ -1,7 +1,7 @@
 package ru.pnm.dbmanger.service.hikari.config;
 
 import com.zaxxer.hikari.HikariConfig;
-import ru.pnm.dbmanger.model.CommandLineArgs;
+import ru.pnm.dbmanger.model.commandline.CommandLineArgs;
 
 /**
  * Фабрика для получения
