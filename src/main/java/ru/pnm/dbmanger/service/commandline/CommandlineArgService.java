@@ -9,6 +9,6 @@ import ru.pnm.dbmanger.model.commandline.CommandLineArgs;
  */
 public interface CommandlineArgService {
 
-  CommandLineArgs getCommandLinaArg();
+  CommandLineArgs getCommandLineArg();
 
 }

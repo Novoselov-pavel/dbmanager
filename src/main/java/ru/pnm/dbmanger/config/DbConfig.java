@@ -13,14 +13,11 @@ import ru.pnm.dbmanger.service.hikari.config.HikariConfigFactory;
  */
 @Configuration
 public class DbConfig {
-  @Autowired
-  private CommandlineArgService commandlineArgService;
-  @Autowired
-  private HikariConfigFactory hikariConfigFactory;
 
   @Bean
-  public HikariDataSource dataSource(){
-    return new HikariDataSource(hikariConfigFactory.getConfig(commandlineArgService.getCommandLinaArg()));
+  public HikariDataSource dataSource(@Autowired CommandlineArgService commandlineArgService,
+                                     @Autowired HikariConfigFactory hikariConfigFactory){
+    return new HikariDataSource(hikariConfigFactory.getConfig(commandlineArgService.getCommandLineArg()));
   }
 
 }
