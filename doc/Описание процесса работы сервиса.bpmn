@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0kk81v7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.10.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="Process_0cuvs9c" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Запуск с аргументами командной строки">
+      <bpmn:outgoing>Flow_140erem</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Activity_1g9jmqr" name="CommandlineArgService.&#10;Получение аргументов из командной строки.">
+      <bpmn:incoming>Flow_140erem</bpmn:incoming>
+      <bpmn:outgoing>Flow_0z1ppt3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_140erem" sourceRef="StartEvent_1" targetRef="Activity_1g9jmqr" />
+    <bpmn:task id="Activity_0c5pcpe" name="DbConfig.&#10;Подключение к базе данных">
+      <bpmn:incoming>Flow_1w78glc</bpmn:incoming>
+      <bpmn:outgoing>Flow_14xowpf</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0z1ppt3" sourceRef="Activity_1g9jmqr" targetRef="Activity_0uzeubi" />
+    <bpmn:task id="Activity_0yaegc8" name="Определения необходимых опрераций базы данных (create, drop ... )">
+      <bpmn:incoming>Flow_14xowpf</bpmn:incoming>
+      <bpmn:outgoing>Flow_08v4jgl</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_14xowpf" sourceRef="Activity_0c5pcpe" targetRef="Activity_0yaegc8" />
+    <bpmn:task id="Activity_1s4ao74" name="Определение типа базы по переданному URL">
+      <bpmn:incoming>Flow_08v4jgl</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hur2zr</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_08v4jgl" sourceRef="Activity_0yaegc8" targetRef="Activity_1s4ao74" />
+    <bpmn:task id="Activity_1tjdtk9" name="Получение пула операций создания/удаления базы, схемы и пользователей">
+      <bpmn:incoming>Flow_0hur2zr</bpmn:incoming>
+      <bpmn:outgoing>Flow_1lnkc9c</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0hur2zr" sourceRef="Activity_1s4ao74" targetRef="Activity_1tjdtk9" />
+    <bpmn:task id="Activity_02yorzx" name="Выполнение операций">
+      <bpmn:incoming>Flow_1lnkc9c</bpmn:incoming>
+      <bpmn:outgoing>Flow_0frj5qu</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_1lnkc9c" sourceRef="Activity_1tjdtk9" targetRef="Activity_02yorzx" />
+    <bpmn:task id="Activity_1gs942i" name="Выполнение операций liquibase">
+      <bpmn:incoming>Flow_0frj5qu</bpmn:incoming>
+      <bpmn:outgoing>Flow_08w1wms</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0frj5qu" sourceRef="Activity_02yorzx" targetRef="Activity_1gs942i" />
+    <bpmn:task id="Activity_0uzeubi" name="Валидация аргументов командной строки">
+      <bpmn:incoming>Flow_0z1ppt3</bpmn:incoming>
+      <bpmn:outgoing>Flow_1w78glc</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_1w78glc" sourceRef="Activity_0uzeubi" targetRef="Activity_0c5pcpe" />
+    <bpmn:endEvent id="Event_00yqoxj">
+      <bpmn:incoming>Flow_08w1wms</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_08w1wms" sourceRef="Activity_1gs942i" targetRef="Event_00yqoxj" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0cuvs9c">
+      <bpmndi:BPMNEdge id="Flow_140erem_di" bpmnElement="Flow_140erem">
+        <di:waypoint x="208" y="117" />
+        <di:waypoint x="250" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0z1ppt3_di" bpmnElement="Flow_0z1ppt3">
+        <di:waypoint x="350" y="117" />
+        <di:waypoint x="400" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14xowpf_di" bpmnElement="Flow_14xowpf">
+        <di:waypoint x="640" y="117" />
+        <di:waypoint x="730" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08v4jgl_di" bpmnElement="Flow_08v4jgl">
+        <di:waypoint x="830" y="117" />
+        <di:waypoint x="890" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hur2zr_di" bpmnElement="Flow_0hur2zr">
+        <di:waypoint x="990" y="117" />
+        <di:waypoint x="1050" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lnkc9c_di" bpmnElement="Flow_1lnkc9c">
+        <di:waypoint x="1100" y="157" />
+        <di:waypoint x="1100" y="210" />
+        <di:waypoint x="470" y="210" />
+        <di:waypoint x="470" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0frj5qu_di" bpmnElement="Flow_0frj5qu">
+        <di:waypoint x="520" y="270" />
+        <di:waypoint x="570" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1w78glc_di" bpmnElement="Flow_1w78glc">
+        <di:waypoint x="500" y="117" />
+        <di:waypoint x="540" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08w1wms_di" bpmnElement="Flow_08w1wms">
+        <di:waypoint x="670" y="270" />
+        <di:waypoint x="722" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_0yaegc8_di" bpmnElement="Activity_0yaegc8">
+        <dc:Bounds x="730" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1s4ao74_di" bpmnElement="Activity_1s4ao74">
+        <dc:Bounds x="890" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1tjdtk9_di" bpmnElement="Activity_1tjdtk9">
+        <dc:Bounds x="1050" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02yorzx_di" bpmnElement="Activity_02yorzx">
+        <dc:Bounds x="420" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gs942i_di" bpmnElement="Activity_1gs942i">
+        <dc:Bounds x="570" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="172" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="157" y="142" width="67" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1g9jmqr_di" bpmnElement="Activity_1g9jmqr">
+        <dc:Bounds x="250" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0c5pcpe_di" bpmnElement="Activity_0c5pcpe">
+        <dc:Bounds x="540" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0uzeubi_di" bpmnElement="Activity_0uzeubi">
+        <dc:Bounds x="400" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00yqoxj_di" bpmnElement="Event_00yqoxj">
+        <dc:Bounds x="722" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
