@@ -6,13 +6,13 @@ package ru.pnm.dbmanger.model.commandline;
  * @author Новоселов Павел
  */
 public enum CommandLineOption {
-  DB_URL("--url"),
-  DB_USERNAME("--userName"),
-  DB_PASSWORD("--userPassword"),
-  ADMIN_USERNAME("--admin"),
-  ADMIN_PASSWORD("--adminPassword"),
-  DB_NAME("--database"),
-  DB_SCHEMA("--schema");
+  DB_URL("url"),
+  DB_USERNAME("userName"),
+  DB_USER_PASSWORD("userPassword"),
+  ADMIN_USERNAME("admin"),
+  ADMIN_PASSWORD("adminPassword"),
+  DB_NAME("database"),
+  DB_SCHEMA("schema");
 
   private final String optionName;
 
@@ -22,15 +22,16 @@ public enum CommandLineOption {
 
   /**
    * Возвращает опции по аргументу командной строки или null
+   *
    * @param arg аргумент командной строки
    * @return CommandLineOption или null
    */
-  public static CommandLineOption getOption(String arg){
-    if(arg == null){
+  public static CommandLineOption getOption(String arg) {
+    if (arg == null) {
       return null;
     }
     for (CommandLineOption value : CommandLineOption.values()) {
-      if(arg.equalsIgnoreCase(value.getOptionName())){
+      if (arg.equalsIgnoreCase(value.getOptionName())) {
         return value;
       }
     }
@@ -40,5 +41,9 @@ public enum CommandLineOption {
 
   public String getOptionName() {
     return optionName;
+  }
+
+  public String getOption() {
+    return "--" + optionName;
   }
 }

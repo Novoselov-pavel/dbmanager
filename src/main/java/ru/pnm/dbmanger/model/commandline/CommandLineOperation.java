@@ -24,15 +24,16 @@ public enum CommandLineOperation {
 
   /**
    * Возвращает операцию по аргументу командной строки или null
+   *
    * @param arg аргумент командной строки
    * @return CommandLineOperation или null
    */
-  public static CommandLineOperation getOperation(String arg){
-    if(arg == null){
+  public static CommandLineOperation getOperation(String arg) {
+    if (arg == null) {
       return null;
     }
     for (CommandLineOperation value : CommandLineOperation.values()) {
-      if(arg.equalsIgnoreCase(value.getFullOperationName()) || arg.equalsIgnoreCase(value.getShortOperationName())){
+      if (arg.equalsIgnoreCase(value.getFullOperationName()) || arg.equalsIgnoreCase(value.getShortOperationName())) {
         return value;
       }
     }
