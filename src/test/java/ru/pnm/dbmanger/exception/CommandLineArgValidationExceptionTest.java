@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.assertj.core.api.Assertions.assertThat;
 
 class CommandLineArgValidationExceptionTest {
 
@@ -28,8 +27,7 @@ class CommandLineArgValidationExceptionTest {
   @Test
   void createExceptionWithListWithNull() {
     try {
-      List<String> list = new ArrayList<>();
-      list.add(null);
+      List<CommandLineArgValidationException.ExceptionReason> list = new ArrayList<>();
       CommandLineArgValidationException exception = new CommandLineArgValidationException(list);
     } catch (Exception e) {
       e.printStackTrace();
@@ -37,13 +35,4 @@ class CommandLineArgValidationExceptionTest {
     }
   }
 
-  @Test
-  void getExceptionStringT() {
-    List<String> list = new ArrayList<>();
-    list.add("A");
-    list.add(null);
-    list.add("B");
-    CommandLineArgValidationException exception = new CommandLineArgValidationException(list);
-    assertThat(exception.getMessageString()).isEqualTo("A" + System.lineSeparator() + "B" + System.lineSeparator());
-  }
 }

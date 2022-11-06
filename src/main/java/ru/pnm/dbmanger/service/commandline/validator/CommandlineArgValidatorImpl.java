@@ -1,13 +1,15 @@
 package ru.pnm.dbmanger.service.commandline.validator;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import ru.pnm.dbmanger.exception.CommandLineArgValidationException;
 import ru.pnm.dbmanger.model.commandline.CommandLineArgs;
+import ru.pnm.dbmanger.model.commandline.DatabaseType;
 
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.Objects.*;
 
 /**
  * Валидатор для аргументов командной строки
@@ -17,13 +19,62 @@ import java.util.Locale;
 @RequiredArgsConstructor
 @Service
 public class CommandlineArgValidatorImpl implements CommandlineArgValidator {
+  private static final String CMD_ARG_IS_NULL = "cmd.arg.is.null";
+  private static final String URL_IS_NULL = "url.is.null";
+  private static final String DB_IS_NOT_SUPPORTED = "db.is.not.supported";
+  private static final String ADMIN_IS_NULL = "admin.is.null";
+  private static final String ADMIN_PASSWORD_IS_NULL = "admin.password.is.null";
+  private static final String DB_USER_NAME_IS_NULL = "db.user.is.null";
+  private static final String DB_USER_PASSWORD_IS_NULL = "db.user.password.is.null";
+  private static final String DB_NAME_IS_NULL = "db.name.is.null";
 
 
   @Override
-  public void validate(@NonNull CommandLineArgs args) throws CommandLineArgValidationException {
-    System.out.println(LocaleContextHolder.getLocale());
+  public void validate(CommandLineArgs args) throws CommandLineArgValidationException {
+    final List<CommandLineArgValidationException.ExceptionReason> exceptionReasons = new ArrayList<>();
+    boolean check = true;
+    if(isNull(args)){
+      exceptionReasons.add(new CommandLineArgValidationException.ExceptionReason(CMD_ARG_IS_NULL,null));
+      throw new CommandLineArgValidationException(exceptionReasons);
+    }
 
+    DatabaseType type = DatabaseType.getTypeFromDbUrl(args.dbUrl());
+    if(isNull(type)){
+      exceptionReasons.add(new CommandLineArgValidationException.ExceptionReason(DB_IS_NOT_SUPPORTED,null));
+      check = false;
+    }
+
+    if(isNull(args.adminUserName())){
+      exceptionReasons.add(new CommandLineArgValidationException.ExceptionReason(ADMIN_IS_NULL,null));
+      check = false;
+    }
+
+    if(isNull(args.adminPassword())){
+      exceptionReasons.add(new CommandLineArgValidationException.ExceptionReason(ADMIN_PASSWORD_IS_NULL,null));
+      check = false;
+    }
+
+    if(isNull(args.dbUserName())){
+      exceptionReasons.add(new CommandLineArgValidationException.ExceptionReason(DB_USER_NAME_IS_NULL,null));
+      check = false;
+    }
+
+    if(isNull(args.dbUserPassword())){
+      exceptionReasons.add(new CommandLineArgValidationException.ExceptionReason(DB_USER_PASSWORD_IS_NULL,null));
+      check = false;
+    }
+
+    if(isNull(args.dbName())){
+      exceptionReasons.add(new CommandLineArgValidationException.ExceptionReason(DB_NAME_IS_NULL,null));
+      check = false;
+    }
+
+    if(!check){
+      throw new CommandLineArgValidationException(exceptionReasons);
+    }
   }
+
+
 
 
 

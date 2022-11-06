@@ -2,6 +2,8 @@ package ru.pnm.dbmanger.exception;
 
 import lombok.Getter;
 
+import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,29 +13,36 @@ import java.util.Objects;
  */
 @Getter
 public class CommandLineArgValidationException extends Exception {
-  private final List<String> exceptionReasons;
+  private final List<ExceptionReason> exceptionReasons;
 
-  public CommandLineArgValidationException(List<String> exceptionReasons) {
-    super(getMessageStringForReasons(exceptionReasons));
+  public CommandLineArgValidationException(List<ExceptionReason> exceptionReasons) {
+    super();
     this.exceptionReasons = exceptionReasons;
   }
 
-  private static String getMessageStringForReasons(List<String> exceptionReasons){
-    if(Objects.isNull(exceptionReasons)){
-      return null;
-    }
-   StringBuilder builder = new StringBuilder();
 
-    for (String exceptionReason : exceptionReasons) {
-      if(Objects.nonNull(exceptionReason)){
-        builder.append(exceptionReason).append(System.lineSeparator());
-      }
+  public static record ExceptionReason (String reason, String[] args) implements Serializable {
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+      ExceptionReason that = (ExceptionReason) o;
+      return Objects.equals(reason, that.reason) && Arrays.equals(args, that.args);
     }
 
-    return builder.toString();
-  }
+    @Override
+    public int hashCode() {
+      int result = Objects.hash(reason);
+      result = 31 * result + Arrays.hashCode(args);
+      return result;
+    }
 
-  public String getMessageString(){
-    return getMessageStringForReasons(exceptionReasons);
+    @Override
+    public String toString() {
+      return "ExceptionReason{" +
+          "reason='" + reason + '\'' +
+          ", args=" + Arrays.toString(args) +
+          '}';
+    }
   }
 }

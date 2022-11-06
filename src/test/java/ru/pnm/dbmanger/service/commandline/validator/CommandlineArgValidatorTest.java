@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import ru.pnm.dbmanger.exception.CommandLineArgValidationException;
 import ru.pnm.dbmanger.model.commandline.CommandLineArgs;
 import ru.pnm.dbmanger.model.commandline.CommandLineOperation;
+import ru.pnm.dbmanger.model.commandline.DatabaseType;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -25,8 +26,9 @@ class CommandlineArgValidatorTest {
 
   @Test
   void validateFailValues() {
+    assertThatThrownBy(() -> service.validate(null)).isInstanceOf(CommandLineArgValidationException.class);
 
-    assertThatThrownBy(()->service.validate(new CommandLineArgs(Collections.emptySet(),
+    assertThatThrownBy(() -> service.validate(new CommandLineArgs(Collections.emptySet(),
         null,
         null,
         null,
@@ -38,8 +40,8 @@ class CommandlineArgValidatorTest {
 
     Set<CommandLineOperation> operations = new HashSet<>();
     operations.add(CommandLineOperation.CREATE);
-    assertThatThrownBy(()->service.validate(new CommandLineArgs(operations,
-        "jdbc:postgresql://",
+    assertThatThrownBy(() -> service.validate(new CommandLineArgs(operations,
+        DatabaseType.POSTGRES.getGetDatabaseUrlSimple(),
         null,
         "null",
         "null",
@@ -49,8 +51,8 @@ class CommandlineArgValidatorTest {
         Collections.emptyMap()))).isInstanceOf(CommandLineArgValidationException.class);
 
 
-    assertThatThrownBy(()->service.validate(new CommandLineArgs(operations,
-        "jdbc:postgresql://",
+    assertThatThrownBy(() -> service.validate(new CommandLineArgs(operations,
+        DatabaseType.POSTGRES.getGetDatabaseUrlSimple(),
         null,
         "null",
         "null",
@@ -59,8 +61,8 @@ class CommandlineArgValidatorTest {
         null,
         Collections.emptyMap()))).isInstanceOf(CommandLineArgValidationException.class);
 
-    assertThatThrownBy(()->service.validate(new CommandLineArgs(operations,
-        "jdbc:postgresql://",
+    assertThatThrownBy(() -> service.validate(new CommandLineArgs(operations,
+        DatabaseType.POSTGRES.getGetDatabaseUrlSimple(),
         "null",
         null,
         "null",
@@ -69,8 +71,8 @@ class CommandlineArgValidatorTest {
         null,
         Collections.emptyMap()))).isInstanceOf(CommandLineArgValidationException.class);
 
-    assertThatThrownBy(()->service.validate(new CommandLineArgs(operations,
-        "jdbc:postgresql://",
+    assertThatThrownBy(() -> service.validate(new CommandLineArgs(operations,
+        DatabaseType.POSTGRES.getGetDatabaseUrlSimple(),
         "null",
         "null",
         null,
@@ -79,8 +81,8 @@ class CommandlineArgValidatorTest {
         null,
         Collections.emptyMap()))).isInstanceOf(CommandLineArgValidationException.class);
 
-    assertThatThrownBy(()->service.validate(new CommandLineArgs(operations,
-        "jdbc:postgresql://",
+    assertThatThrownBy(() -> service.validate(new CommandLineArgs(operations,
+        DatabaseType.POSTGRES.getGetDatabaseUrlSimple(),
         "null",
         "null",
         "null",
@@ -89,8 +91,8 @@ class CommandlineArgValidatorTest {
         null,
         Collections.emptyMap()))).isInstanceOf(CommandLineArgValidationException.class);
 
-    assertThatThrownBy(()->service.validate(new CommandLineArgs(operations,
-        "jdbc:postgresql://",
+    assertThatThrownBy(() -> service.validate(new CommandLineArgs(operations,
+        DatabaseType.POSTGRES.getGetDatabaseUrlSimple(),
         "null",
         "null",
         "null",
@@ -106,7 +108,7 @@ class CommandlineArgValidatorTest {
       Set<CommandLineOperation> operations = new HashSet<>();
       operations.add(CommandLineOperation.CREATE);
       service.validate(new CommandLineArgs(operations,
-          "jdbc:postgresql://",
+          DatabaseType.POSTGRES.getGetDatabaseUrlSimple(),
           "null",
           "null",
           "null",
