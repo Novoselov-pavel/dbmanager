@@ -10,9 +10,20 @@ import ru.pnm.dbmanger.model.commandline.CommandLineArgs;
 public interface HikariConfigFactory {
   /**
    * Создает конфигурацию для подключения к базе данных по настройкам
+   * для пролития скриптов с помощью liquibase
    *
    * @param args аргументы командной строки
    * @return HikariConfig
    */
-  HikariConfig getConfig(CommandLineArgs args);
+  HikariConfig getConfigForLiquibase(CommandLineArgs args);
+
+  /**
+   * Создает конфигурацию для подключения к базе данных по настройкам
+   * для выполнения общих операций над базой данных
+   *
+   * @param args аргументы командной строки
+   * @return HikariConfig
+   */
+  HikariConfig getConfigForDatabaseForCommonOperation(CommandLineArgs args);
+
 }

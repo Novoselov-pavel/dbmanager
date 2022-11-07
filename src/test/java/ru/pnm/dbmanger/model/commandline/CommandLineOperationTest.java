@@ -2,6 +2,8 @@ package ru.pnm.dbmanger.model.commandline;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CommandLineOperationTest {
@@ -39,6 +41,21 @@ class CommandLineOperationTest {
   void getOperationFromUpperCaseFullValues() {
     for (CommandLineOperation value : CommandLineOperation.values()) {
       assertThat(CommandLineOperation.getOperation(value.getFullOperationName().toUpperCase())).isEqualTo(value);
+    }
+  }
+
+  @Test
+  void getListByOrder() {
+    List<CommandLineOperation> operations = CommandLineOperation.getListByOrder();
+    int prevVal = Integer.MIN_VALUE;
+    for (int i = 0; i < operations.size(); i++) {
+      if (i == 0) {
+        prevVal = operations.get(i).getOrder();
+      } else {
+        int curVal = operations.get(i).getOrder();
+        assertThat(curVal>prevVal).isTrue();
+        prevVal = curVal;
+      }
     }
   }
 }

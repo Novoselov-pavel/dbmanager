@@ -8,7 +8,7 @@ import java.util.Objects;
  * @author Новоселов Павел
  */
 public enum DatabaseType {
-  POSTGRES("postgres","^jdbc:postgresql://\\w+:\\d+$", "jdbc:postgresql://localhost:5432");
+  POSTGRES("postgres","^jdbc:postgresql://\\w+:\\d+/$", "jdbc:postgresql://localhost:5432/");
 
   private final String databaseTypeName;
   private final String databaseUrlRegex;
