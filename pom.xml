@@ -8,7 +8,7 @@
 		<version>2.7.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>ru.pnm</groupId>
+	<groupId>ru.npm</groupId>
 	<artifactId>dbmanger</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>dbmanger</name>
@@ -62,7 +62,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>ru.pnm.dbmanger.DbmangerApplication</mainClass>
+							<mainClass>ru.npn.dbmanger.DbmangerApplication</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
