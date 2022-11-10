@@ -35,6 +35,7 @@ public class TestDataBuilder {
         dbUserPassword,
         dbName,
         schema,
+        null,
         Collections.emptyMap());
   }
 
@@ -57,6 +58,7 @@ public class TestDataBuilder {
         dbUserPassword,
         dbName,
         schema,
+        null,
         Collections.emptyMap());
   }
 }

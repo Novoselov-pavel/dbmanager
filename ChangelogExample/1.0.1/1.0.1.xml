@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="autoIncrement" value="false" dbms="postgresql,mssql,oracle"/>
+    <property name="autoIncrement" value="true" dbms="h2"/>
+
+    <changeSet id="create_other_test_table" author="novosselov.pavel@gmail.com">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="other_test_table"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="other_test_table_id_seq" incrementBy="1" startValue="1"/>
+
+        <createTable tableName="other_test_table" remarks="Тестовая таблица">
+            <column name="othertesttableid" type="numeric(15,0)" defaultValueSequenceNext="other_test_table_id_seq">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_other_test_table"/>
+            </column>
+            <column name="name" type="numeric(15,0)" remarks="Наименование">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add_column_other_test_table1" author="novosselov.pavel@gmail.com">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="other_test_table"/>
+                <not>
+                    <columnExists tableName="other_test_table" columnName="col"/>
+                </not>
+            </and>
+        </preConditions>
+        <addColumn tableName="other_test_table">
+            <column name="col" type="VARCHAR(255)"></column>
+        </addColumn>
+    </changeSet>
+
+
+</databaseChangeLog>

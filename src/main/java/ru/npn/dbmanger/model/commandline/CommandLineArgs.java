@@ -1,6 +1,7 @@
 package ru.npn.dbmanger.model.commandline;
 
 import lombok.NonNull;
+import org.springframework.lang.Nullable;
 
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +17,7 @@ import java.util.Set;
  * @param dbUserPassword       пароль создаваемого пользователя базы
  * @param dbName               имя базы данных
  * @param schema               схема базы данных
+ * @param changelogPath        путь к файлу changelog
  * @param additionalProperties дополнительные свойства для присоединения к базе
  */
 public record CommandLineArgs(@NonNull Set<CommandLineOperation> operations,
@@ -26,6 +28,7 @@ public record CommandLineArgs(@NonNull Set<CommandLineOperation> operations,
                               String dbUserPassword,
                               String dbName,
                               String schema,
+                              @Nullable String changelogPath,
                               @NonNull Map<String, String> additionalProperties) {
   @Override
   public String toString() {

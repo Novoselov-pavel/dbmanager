@@ -12,7 +12,8 @@ public enum CommandLineOption {
   ADMIN_USERNAME("admin"),
   ADMIN_PASSWORD("adminPassword"),
   DB_NAME("database"),
-  DB_SCHEMA("schema");
+  DB_SCHEMA("schema"),
+  CHANGELOG_PATH("changelog");
 
   private final String optionName;
 

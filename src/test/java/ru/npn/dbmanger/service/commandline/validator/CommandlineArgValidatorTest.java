@@ -36,6 +36,7 @@ class CommandlineArgValidatorTest {
         null,
         null,
         null,
+        null,
         Collections.emptyMap()))).isInstanceOf(CommandLineArgValidationException.class);
 
     Set<CommandLineOperation> operations = new HashSet<>();
@@ -48,6 +49,7 @@ class CommandlineArgValidatorTest {
         "null",
         "null",
         null,
+        null,
         Collections.emptyMap()))).isInstanceOf(CommandLineArgValidationException.class);
 
 
@@ -59,25 +61,17 @@ class CommandlineArgValidatorTest {
         "null",
         "null",
         null,
-        Collections.emptyMap()))).isInstanceOf(CommandLineArgValidationException.class);
-
-    assertThatThrownBy(() -> service.validate(new CommandLineArgs(operations,
-        DatabaseType.POSTGRES.getGetDatabaseUrlSimple(),
-        "null",
-        null,
-        "null",
-        "null",
-        "null",
         null,
         Collections.emptyMap()))).isInstanceOf(CommandLineArgValidationException.class);
 
     assertThatThrownBy(() -> service.validate(new CommandLineArgs(operations,
         DatabaseType.POSTGRES.getGetDatabaseUrlSimple(),
         "null",
-        "null",
         null,
         "null",
         "null",
+        "null",
+        null,
         null,
         Collections.emptyMap()))).isInstanceOf(CommandLineArgValidationException.class);
 
@@ -85,9 +79,10 @@ class CommandlineArgValidatorTest {
         DatabaseType.POSTGRES.getGetDatabaseUrlSimple(),
         "null",
         "null",
-        "null",
         null,
         "null",
+        "null",
+        null,
         null,
         Collections.emptyMap()))).isInstanceOf(CommandLineArgValidationException.class);
 
@@ -96,7 +91,19 @@ class CommandlineArgValidatorTest {
         "null",
         "null",
         "null",
+        null,
         "null",
+        null,
+        null,
+        Collections.emptyMap()))).isInstanceOf(CommandLineArgValidationException.class);
+
+    assertThatThrownBy(() -> service.validate(new CommandLineArgs(operations,
+        DatabaseType.POSTGRES.getGetDatabaseUrlSimple(),
+        "null",
+        "null",
+        "null",
+        "null",
+        null,
         null,
         null,
         Collections.emptyMap()))).isInstanceOf(CommandLineArgValidationException.class);
@@ -114,6 +121,7 @@ class CommandlineArgValidatorTest {
           "null",
           "null",
           "null",
+          null,
           null,
           Collections.emptyMap()));
     } catch (CommandLineArgValidationException e) {

@@ -37,7 +37,7 @@ public class CommandlineArgServiceImpl implements CommandlineArgService {
     String dbUserPassword = getLastOptionValue(CommandLineOption.DB_USER_PASSWORD, optionMap);
     String dbName = getLastOptionValue(CommandLineOption.DB_NAME, optionMap);
     String schema = getLastOptionValue(CommandLineOption.DB_SCHEMA, optionMap);
-
+    String changelogPath = getLastOptionValue(CommandLineOption.CHANGELOG_PATH, optionMap);
     return new CommandLineArgs(operations,
         dbUrl,
         adminUserName,
@@ -46,6 +46,7 @@ public class CommandlineArgServiceImpl implements CommandlineArgService {
         dbUserPassword,
         dbName,
         schema,
+        changelogPath,
         additionalProperties);
   }
 
