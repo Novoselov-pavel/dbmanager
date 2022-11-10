@@ -96,6 +96,7 @@ public class CommonDatabaseOperationServiceImpl implements CommonDatabaseOperati
       for (SqlExpression expression : operation.getExpressions(args)) {
         runExpression(connection, expression);
       }
+      connection.commit();
     } catch (SQLException e) {
       logger.error(e.getMessage(), e);
       return false;

@@ -21,8 +21,7 @@ public class HikariConfigFactoryImpl implements HikariConfigFactory {
   public HikariConfig getConfigForLiquibase(CommandLineArgs args) {
     HikariConfig config = new HikariConfig();
     config.setAutoCommit(true);
-    config.setJdbcUrl(args.dbUrl());
-    config.addDataSourceProperty("dataSource.databaseName", args.dbName());
+    config.setJdbcUrl(args.dbUrl() + args.dbName());
     if (Objects.nonNull(args.schema())) {
       config.addDataSourceProperty("dataSource.schema", args.schema());
     }
@@ -39,7 +38,7 @@ public class HikariConfigFactoryImpl implements HikariConfigFactory {
   public HikariConfig getConfigForDatabaseForCommonOperation(CommandLineArgs args) {
     HikariConfig config = new HikariConfig();
     config.setAutoCommit(true);
-    config.setJdbcUrl(args.dbUrl());
+    config.setJdbcUrl(args.dbUrl() + args.dbName());
     config.setUsername(args.adminUserName());
     config.setPassword(args.adminPassword());
     config.setMaximumPoolSize(MAX_POOL_SIZE);

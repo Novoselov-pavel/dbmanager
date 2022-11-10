@@ -37,4 +37,26 @@ public class TestDataBuilder {
         schema,
         Collections.emptyMap());
   }
+
+
+  public static CommandLineArgs argsWithCreateDbSchemaCommonOperation(){
+    Set<CommandLineOperation> operations = new HashSet<>();
+    operations.add(CommandLineOperation.CREATE_SCHEMA);
+    String dbUrl = DatabaseType.POSTGRES.getGetDatabaseUrlSimple();
+    String adminUserName = "admin";
+    String adminPassword = "admin";
+    String dbUserName = "user";
+    String dbUserPassword = "user";
+    String dbName = "dbname";
+    String schema = "dnschema";
+    return new CommandLineArgs(operations,
+        dbUrl,
+        adminUserName,
+        adminPassword,
+        dbUserName,
+        dbUserPassword,
+        dbName,
+        schema,
+        Collections.emptyMap());
+  }
 }
