@@ -47,11 +47,17 @@ public class PostgresCreateSchemeOperationProvider implements CommonOperationPro
   @Override
   public List<SqlExpression> getExpressions(CommandLineArgs args) {
 
-    List<SqlExpression> retVal = new ArrayList<>(2);
-    SqlExpression createUser = new SqlExpression(String.format(CREATE_DB_USER, args.dbUserName(), args.dbUserName(), args.dbUserPassword()), CREATE_USER_MESSAGE_CODE);
-    SqlExpression grantPrivilege = new SqlExpression(String.format(GRANT_PRIVILEGE_TO_USER, args.dbName(), args.dbUserName()), GRAN_PRIVILEGE_MESSAGE_CODE);
-    String schema = args.schema() == null? DEFAULT_SCHEMA : args.schema();
-    SqlExpression createSchema = new SqlExpression(String.format(CREATE_SCHEMA_IF_NOT_EXIST, schema, args.dbUserName()), CREATE_DB_SHEMA_MESSAGE_CODE);
+    List<SqlExpression> retVal = new ArrayList<>(3);
+    final SqlExpression createUser = new SqlExpression(String.format(CREATE_DB_USER, args.dbUserName(), args.dbUserName(), args.dbUserPassword()),
+        CREATE_USER_MESSAGE_CODE,
+        null);
+    final SqlExpression grantPrivilege = new SqlExpression(String.format(GRANT_PRIVILEGE_TO_USER, args.dbName(), args.dbUserName()),
+        GRAN_PRIVILEGE_MESSAGE_CODE,
+        null);
+    final String schema = args.schema() == null? DEFAULT_SCHEMA : args.schema();
+    final SqlExpression createSchema = new SqlExpression(String.format(CREATE_SCHEMA_IF_NOT_EXIST, schema, args.dbUserName()),
+        CREATE_DB_SHEMA_MESSAGE_CODE,
+        null);
 
     retVal.add(createUser);
     retVal.add(grantPrivilege);

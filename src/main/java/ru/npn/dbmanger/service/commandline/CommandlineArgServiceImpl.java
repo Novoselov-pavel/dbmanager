@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.npn.dbmanger.model.commandline.CommandLineArgs;
 import ru.npn.dbmanger.model.commandline.CommandLineOperation;
 import ru.npn.dbmanger.model.commandline.CommandLineOption;
+import ru.npn.dbmanger.model.commandline.DatabaseType;
 
 import java.util.*;
 
@@ -38,6 +39,7 @@ public class CommandlineArgServiceImpl implements CommandlineArgService {
     String dbName = getLastOptionValue(CommandLineOption.DB_NAME, optionMap);
     String schema = getLastOptionValue(CommandLineOption.DB_SCHEMA, optionMap);
     String changelogPath = getLastOptionValue(CommandLineOption.CHANGELOG_PATH, optionMap);
+    final DatabaseType databaseType = DatabaseType.getTypeFromDbUrl(dbUrl);
     return new CommandLineArgs(operations,
         dbUrl,
         adminUserName,
@@ -46,6 +48,7 @@ public class CommandlineArgServiceImpl implements CommandlineArgService {
         dbUserPassword,
         dbName,
         schema,
+        databaseType,
         changelogPath,
         additionalProperties);
   }

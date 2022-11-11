@@ -24,7 +24,7 @@ public interface CommonOperationProvider {
   CommandLineOperation getOperation();
 
   /**
-   * Возвращяет тип базы данных имплементации
+   * Возвращает тип базы данных имплементации
    *
    * @return DatabaseType
    */

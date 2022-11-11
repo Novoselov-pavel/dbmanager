@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.npn.dbmanger.model.commandline.CommandLineArgs;
+import ru.npn.dbmanger.service.url.UrlBuilder;
 
 import java.util.Objects;
 
@@ -17,11 +18,13 @@ public class HikariConfigFactoryImpl implements HikariConfigFactory {
   private static final String INIT_SQL = "SELECT 1";
   private static final String TEST_QUERY = "SELECT 1";
 
+  private final UrlBuilder urlBuilder;
+
   @Override
   public HikariConfig getConfigForLiquibase(CommandLineArgs args) {
     HikariConfig config = new HikariConfig();
     config.setAutoCommit(true);
-    config.setJdbcUrl(args.dbUrl() + args.dbName());
+    config.setJdbcUrl(urlBuilder.getUrl(args));
     if (Objects.nonNull(args.schema())) {
       config.addDataSourceProperty("dataSource.schema", args.schema());
     }
@@ -38,7 +41,7 @@ public class HikariConfigFactoryImpl implements HikariConfigFactory {
   public HikariConfig getConfigForDatabaseForCommonOperation(CommandLineArgs args) {
     HikariConfig config = new HikariConfig();
     config.setAutoCommit(true);
-    config.setJdbcUrl(args.dbUrl() + args.dbName());
+    config.setJdbcUrl(urlBuilder.getUrl(args));
     config.setUsername(args.adminUserName());
     config.setPassword(args.adminPassword());
     config.setMaximumPoolSize(MAX_POOL_SIZE);
