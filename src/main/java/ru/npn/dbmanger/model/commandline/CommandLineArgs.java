@@ -17,6 +17,7 @@ import java.util.Set;
  * @param dbUserPassword       пароль создаваемого пользователя базы
  * @param dbName               имя базы данных
  * @param schema               схема базы данных
+ * @param databaseType         тип базы данных
  * @param changelogPath        путь к файлу changelog
  * @param additionalProperties дополнительные свойства для присоединения к базе
  */
@@ -28,19 +29,24 @@ public record CommandLineArgs(@NonNull Set<CommandLineOperation> operations,
                               String dbUserPassword,
                               String dbName,
                               String schema,
+                              @Nullable DatabaseType databaseType,
                               @Nullable String changelogPath,
                               @NonNull Map<String, String> additionalProperties) {
-  @Override
-  public String toString() {
-    return "Command Line Args: " + System.lineSeparator() +
+  public String argumentToPrettyString(){
+    return "Command line arguments: " + System.lineSeparator() +
         "operations=" + operations + "," + System.lineSeparator() +
-        "dbUrl='" + dbUrl + '\'' + "," + System.lineSeparator() +
-        "adminUserName='**********'," + System.lineSeparator() +
-        "adminPassword='**********'," + System.lineSeparator() +
-        "dbUserName='" + dbUserName + '\'' + "," + System.lineSeparator() +
-        "dbUserPassword='" + dbUserPassword + '\'' + "," + System.lineSeparator() +
-        "dbName='" + dbName + '\'' + "," + System.lineSeparator() +
-        "schema='" + schema + '\'' + "," + System.lineSeparator() +
-        "additionalProperties=" + additionalProperties;
+        getOptionPrettyString(CommandLineOption.DB_URL, dbUrl) +
+        getOptionPrettyString(CommandLineOption.ADMIN_USERNAME, adminUserName) +
+        getOptionPrettyString(CommandLineOption.ADMIN_PASSWORD, adminPassword) +
+        getOptionPrettyString(CommandLineOption.DB_USERNAME, dbUserName) +
+        getOptionPrettyString(CommandLineOption.DB_USER_PASSWORD, dbUserPassword) +
+        getOptionPrettyString(CommandLineOption.DB_NAME, dbUserPassword) +
+        getOptionPrettyString(CommandLineOption.DB_SCHEMA, dbUserPassword) +
+        getOptionPrettyString(CommandLineOption.CHANGELOG_PATH, changelogPath) +
+        getOptionPrettyString(CommandLineOption.CHANGELOG_PATH, changelogPath);
+  }
+
+  public String getOptionPrettyString(CommandLineOption option, String value){
+    return option.getOptionName() + "=" + value + "," + System.lineSeparator();
   }
 }

@@ -1,15 +1,12 @@
 package ru.npn.dbmanger;
 
-import lombok.NonNull;
 import ru.npn.dbmanger.model.commandline.CommandLineArgs;
 import ru.npn.dbmanger.model.commandline.CommandLineOperation;
 import ru.npn.dbmanger.model.commandline.DatabaseType;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-
 /**
  * данные для теста
  *
@@ -25,7 +22,7 @@ public class TestDataBuilder {
     String adminPassword = "admin";
     String dbUserName = "user";
     String dbUserPassword = "user";
-    String dbName = "dbname";
+    String dbName = "dbname-test-absent-db-rsdfh";
     String schema = "dnschema";
     return new CommandLineArgs(operations,
         dbUrl,
@@ -35,6 +32,7 @@ public class TestDataBuilder {
         dbUserPassword,
         dbName,
         schema,
+        DatabaseType.POSTGRES,
         null,
         Collections.emptyMap());
   }
@@ -48,7 +46,7 @@ public class TestDataBuilder {
     String adminPassword = "admin";
     String dbUserName = "user";
     String dbUserPassword = "user";
-    String dbName = "dbname";
+    String dbName = "dbname-test-absent-db-rsdfh";
     String schema = "dnschema";
     return new CommandLineArgs(operations,
         dbUrl,
@@ -58,6 +56,7 @@ public class TestDataBuilder {
         dbUserPassword,
         dbName,
         schema,
+        DatabaseType.POSTGRES,
         null,
         Collections.emptyMap());
   }

@@ -11,7 +11,6 @@ import ru.npn.dbmanger.model.commandline.DatabaseType;
 import ru.npn.dbmanger.model.operation.SqlExpression;
 import ru.npn.dbmanger.service.message.MessageService;
 
-import javax.annotation.PostConstruct;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -47,13 +46,11 @@ public class CommonDatabaseOperationServiceImpl implements CommonDatabaseOperati
     this.args = args;
   }
 
-  @PostConstruct
-  public void init() {
-    processCommonOperations();
-  }
-
   @Override
   public boolean processCommonOperations() {
+    if(Objects.isNull(hikariDataSource)){
+      return false;
+    }
     if (!CommandLineOperation.hasCommonDatabaseOperation(args.operations())) {
       return true;
     }
@@ -109,7 +106,7 @@ public class CommonDatabaseOperationServiceImpl implements CommonDatabaseOperati
     try (PreparedStatement statement = connection.prepareStatement(expression.sqlExpression())) {
       statement.execute();
       if(Objects.nonNull(expression.messageCode())){
-        messageService.logInfo(expression.messageCode(), null);
+        messageService.logInfo(expression.messageCode(), expression.args());
       }
     }
   }
