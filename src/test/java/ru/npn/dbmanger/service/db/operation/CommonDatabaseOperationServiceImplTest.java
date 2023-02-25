@@ -57,6 +57,6 @@ class CommonDatabaseOperationServiceImplTest {
         args);
     service.processCommonOperations();
     Mockito.verify(hikariDataSource, Mockito.times(1)).getConnection();
-    Mockito.verify(connection, Mockito.times(3)).prepareStatement(Mockito.anyString());
+    Mockito.verify(connection, Mockito.times(4)).prepareStatement(Mockito.anyString());
   }
 }

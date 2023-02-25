@@ -20,6 +20,7 @@ public class PostgresCreateSchemeOperationProvider implements CommonOperationPro
   private static final String CREATE_USER_MESSAGE_CODE = "db.common.operation.create.user";
   private static final String CREATE_DB_SHEMA_MESSAGE_CODE = "db.common.operation.create.dbschema";
   private static final String GRAN_PRIVILEGE_MESSAGE_CODE = "db.common.operation.create.db.grant.privilege";
+  private static final String DB_COMMON_OPERATION_CREATE_DB_GRANT_SCHEMA_PRIVILEGE = "db.common.operation.create.db.grant.schema.privilege";
 
   private static final String CREATE_DB_USER = " Do $$ " +
       "begin " +
@@ -32,7 +33,7 @@ public class PostgresCreateSchemeOperationProvider implements CommonOperationPro
       "$$";
   private static final String GRANT_PRIVILEGE_TO_USER = "GRANT ALL ON DATABASE %s TO %s WITH GRANT OPTION;";
   private static final String CREATE_SCHEMA_IF_NOT_EXIST = "CREATE SCHEMA IF NOT EXISTS %s AUTHORIZATION %s;";
-
+  private static final String GRANT_SCHEMA_PRIVILEGE = "GRANT ALL ON SCHEMA %s TO %s;";
 
   @Override
   public @NonNull CommandLineOperation getOperation() {
@@ -55,13 +56,20 @@ public class PostgresCreateSchemeOperationProvider implements CommonOperationPro
         GRAN_PRIVILEGE_MESSAGE_CODE,
         null);
     final String schema = args.schema() == null? DEFAULT_SCHEMA : args.schema();
+
     final SqlExpression createSchema = new SqlExpression(String.format(CREATE_SCHEMA_IF_NOT_EXIST, schema, args.dbUserName()),
         CREATE_DB_SHEMA_MESSAGE_CODE,
         null);
 
+    final SqlExpression grantPrivilegeSchema = new SqlExpression(String.format(GRANT_SCHEMA_PRIVILEGE, schema, args.dbUserName()),
+        DB_COMMON_OPERATION_CREATE_DB_GRANT_SCHEMA_PRIVILEGE,
+        null);
+
+
     retVal.add(createUser);
     retVal.add(grantPrivilege);
     retVal.add(createSchema);
+    retVal.add(grantPrivilegeSchema);
     return retVal;
   }
 

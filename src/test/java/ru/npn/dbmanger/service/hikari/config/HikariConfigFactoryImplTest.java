@@ -27,10 +27,10 @@ class HikariConfigFactoryImplTest {
     assertThat(service.getConfigForLiquibase(args))
         .matches(config->config.getJdbcUrl().equals(args.dbUrl() + args.dbName()),
             "dburl is args.dbUrl() + args.dbName()")
-        .matches(config->config.getUsername().equals(args.adminUserName()),
-            "userName is admin")
-        .matches(config->config.getPassword().equals(args.adminPassword()),
-            "password is adminPassword");
+        .matches(config->config.getUsername().equals(args.dbUserName()),
+            "userName is dbUserName")
+        .matches(config->config.getPassword().equals(args.dbUserPassword()),
+            "password is dbUserPassword");
   }
 
   @Test
