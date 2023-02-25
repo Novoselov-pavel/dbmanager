@@ -1,4 +1,4 @@
-package ru.npn.dbmanger.service.operation;
+package ru.npn.dbmanger.service.db.operation;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.npn.dbmanger.TestDataBuilder;
 import ru.npn.dbmanger.model.commandline.CommandLineArgs;
 import ru.npn.dbmanger.service.message.MessageService;
-import ru.npn.dbmanger.service.operation.postgres.PostgresCreateSchemeOperationProvider;
+import ru.npn.dbmanger.service.db.operation.postgres.PostgresCreateSchemeOperationProvider;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

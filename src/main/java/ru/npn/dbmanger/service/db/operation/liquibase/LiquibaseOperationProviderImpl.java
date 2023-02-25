@@ -1,4 +1,4 @@
-package ru.npn.dbmanger.service.operation.liquibase;
+package ru.npn.dbmanger.service.db.operation.liquibase;
 
 import liquibase.Liquibase;
 import liquibase.database.Database;

@@ -29,16 +29,16 @@ public class CommandlineArgServiceImpl implements CommandlineArgService {
   public CommandLineArgs getCommandLineArg() {
     final Set<CommandLineOperation> operations = getOperationFromArgs(applicationArguments.getSourceArgs());
 
-    Map<String, String> additionalProperties = new HashMap<>();
+    final Map<String, String> additionalProperties = new HashMap<>();
     final Map<CommandLineOption, String> optionMap = getOptionNameMap(applicationArguments.getOptionNames());
-    String dbUrl = getLastOptionValue(CommandLineOption.DB_URL, optionMap);
-    String adminUserName = getLastOptionValue(CommandLineOption.ADMIN_USERNAME, optionMap);
-    String adminPassword = getLastOptionValue(CommandLineOption.ADMIN_PASSWORD, optionMap);
-    String dbUserName = getLastOptionValue(CommandLineOption.DB_USERNAME, optionMap);
-    String dbUserPassword = getLastOptionValue(CommandLineOption.DB_USER_PASSWORD, optionMap);
-    String dbName = getLastOptionValue(CommandLineOption.DB_NAME, optionMap);
-    String schema = getLastOptionValue(CommandLineOption.DB_SCHEMA, optionMap);
-    String changelogPath = getLastOptionValue(CommandLineOption.CHANGELOG_PATH, optionMap);
+    final String dbUrl = getLastOptionValue(CommandLineOption.DB_URL, optionMap);
+    final String adminUserName = getLastOptionValue(CommandLineOption.ADMIN_USERNAME, optionMap);
+    final String adminPassword = getLastOptionValue(CommandLineOption.ADMIN_PASSWORD, optionMap);
+    final String dbUserName = getLastOptionValue(CommandLineOption.DB_USERNAME, optionMap);
+    final String dbUserPassword = getLastOptionValue(CommandLineOption.DB_USER_PASSWORD, optionMap);
+    final String dbName = getLastOptionValue(CommandLineOption.DB_NAME, optionMap);
+    final String schema = getLastOptionValue(CommandLineOption.DB_SCHEMA, optionMap);
+    final String changelogPath = getLastOptionValue(CommandLineOption.CHANGELOG_PATH, optionMap);
     final DatabaseType databaseType = DatabaseType.getTypeFromDbUrl(dbUrl);
     return new CommandLineArgs(operations,
         dbUrl,

@@ -1,9 +1,8 @@
-package ru.npn.dbmanger.service.operation;
+package ru.npn.dbmanger.service.db.operation;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.Assert;
 import ru.npn.dbmanger.model.commandline.CommandLineArgs;
 import ru.npn.dbmanger.model.commandline.CommandLineOperation;
@@ -36,7 +35,7 @@ public class CommonDatabaseOperationServiceImpl implements CommonDatabaseOperati
 
   private final CommandLineArgs args;
 
-  public CommonDatabaseOperationServiceImpl(@Qualifier("dataSourceForCommonOperation") HikariDataSource hikariDataSource,
+  public CommonDatabaseOperationServiceImpl(HikariDataSource hikariDataSource,
                                             List<CommonOperationProvider> operations,
                                             MessageService messageService,
                                             CommandLineArgs args) {
@@ -59,7 +58,7 @@ public class CommonDatabaseOperationServiceImpl implements CommonDatabaseOperati
         .sorted(Comparator.naturalOrder())
         .toList();
 
-    final DatabaseType databaseType = DatabaseType.getTypeFromDbUrl(args.dbUrl());
+    final DatabaseType databaseType = args.databaseType();
     Assert.notNull(databaseType, "DatabaseType can't be null");
 
     messageService.logInfo(COMMON_OPERATIONS_START, new String[]{commonOperationByPriority.toString()});

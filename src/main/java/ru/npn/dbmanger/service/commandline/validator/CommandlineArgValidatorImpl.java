@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.npn.dbmanger.exception.CommandLineArgValidationException;
 import ru.npn.dbmanger.model.commandline.CommandLineArgs;
+import ru.npn.dbmanger.model.commandline.CommandLineOperation;
 import ru.npn.dbmanger.model.commandline.DatabaseType;
 
 import java.util.ArrayList;
@@ -31,11 +32,17 @@ public class CommandlineArgValidatorImpl implements CommandlineArgValidator {
 
   @Override
   public void validate(CommandLineArgs args) throws CommandLineArgValidationException {
+
     final List<CommandLineArgValidationException.ExceptionReason> exceptionReasons = new ArrayList<>();
     boolean check = true;
+
     if(isNull(args)){
       exceptionReasons.add(new CommandLineArgValidationException.ExceptionReason(CMD_ARG_IS_NULL,null));
       throw new CommandLineArgValidationException(exceptionReasons);
+    }
+
+    if(hasHelpCommand(args)){
+      return;
     }
 
     if(isNull(args.dbUrl())){
@@ -77,10 +84,17 @@ public class CommandlineArgValidatorImpl implements CommandlineArgValidator {
     if(!check){
       throw new CommandLineArgValidationException(exceptionReasons);
     }
+
+
   }
 
+  private boolean hasHelpCommand(CommandLineArgs args){
+    for (CommandLineOperation operation : args.operations()) {
+      if(CommandLineOperation.HELP == operation){
+        return true;
+      }
+    }
 
-
-
-
+    return false;
+  }
 }

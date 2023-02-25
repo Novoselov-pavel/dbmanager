@@ -25,6 +25,28 @@ class CommandlineArgValidatorTest {
   }
 
   @Test
+  void validateHeplOperation() {
+
+    try {
+      Set<CommandLineOperation> operations = new HashSet<>();
+      operations.add(CommandLineOperation.HELP);
+      service.validate(new CommandLineArgs(operations,null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          Collections.emptyMap()));
+    } catch (CommandLineArgValidationException e) {
+      e.printStackTrace();
+      fail();
+    }
+  }
+
+  @Test
   void validateFailValues() {
     assertThatThrownBy(() -> service.validate(null)).isInstanceOf(CommandLineArgValidationException.class);
 

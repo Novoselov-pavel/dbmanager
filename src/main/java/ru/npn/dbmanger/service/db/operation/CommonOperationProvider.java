@@ -1,4 +1,4 @@
-package ru.npn.dbmanger.service.operation;
+package ru.npn.dbmanger.service.db.operation;
 
 import lombok.NonNull;
 import ru.npn.dbmanger.model.commandline.CommandLineArgs;
