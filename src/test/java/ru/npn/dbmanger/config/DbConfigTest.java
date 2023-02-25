@@ -3,7 +3,6 @@ package ru.npn.dbmanger.config;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.npn.dbmanger.TestDataBuilder;
 import ru.npn.dbmanger.exception.CommandLineArgValidationException;
 import ru.npn.dbmanger.model.commandline.CommandLineArgs;
@@ -14,7 +13,7 @@ import ru.npn.dbmanger.service.message.MessageService;
 import ru.npn.dbmanger.service.url.UrlBuilderImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 class DbConfigTest {
 
   private DbConfig service;
