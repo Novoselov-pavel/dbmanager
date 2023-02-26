@@ -8,10 +8,10 @@ import ru.npn.dbmanger.model.commandline.CommandLineArgs;
 import ru.npn.dbmanger.model.commandline.CommandLineOperation;
 import ru.npn.dbmanger.model.commandline.DatabaseType;
 import ru.npn.dbmanger.model.operation.SqlExpression;
+import ru.npn.dbmanger.service.db.sql.SqlStatementRunner;
 import ru.npn.dbmanger.service.message.MessageService;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
@@ -90,7 +90,7 @@ public class CommonDatabaseOperationServiceImpl implements CommonDatabaseOperati
     try (Connection connection = hikariDataSource.getConnection()) {
       connection.setAutoCommit(false);
       for (SqlExpression expression : operation.getExpressions(args)) {
-        runExpression(connection, expression);
+        SqlStatementRunner.runExpression(messageService, connection, expression);
       }
       connection.commit();
     } catch (SQLException e) {
@@ -100,13 +100,4 @@ public class CommonDatabaseOperationServiceImpl implements CommonDatabaseOperati
     return true;
   }
 
-
-  private void runExpression(Connection connection, SqlExpression expression) throws SQLException {
-    try (PreparedStatement statement = connection.prepareStatement(expression.sqlExpression())) {
-      statement.execute();
-      if(Objects.nonNull(expression.messageCode())){
-        messageService.logInfo(expression.messageCode(), expression.args());
-      }
-    }
-  }
 }

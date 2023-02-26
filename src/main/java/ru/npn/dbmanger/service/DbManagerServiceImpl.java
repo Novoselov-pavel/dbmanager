@@ -3,6 +3,7 @@ package ru.npn.dbmanger.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.npn.dbmanger.exception.CommandLineArgValidationException;
+import ru.npn.dbmanger.exception.DbUpdateException;
 import ru.npn.dbmanger.model.commandline.CommandLineArgs;
 import ru.npn.dbmanger.service.commandline.CommandlineArgService;
 import ru.npn.dbmanger.service.commandline.validator.CommandlineArgValidator;
@@ -51,7 +52,10 @@ public class DbManagerServiceImpl implements DbManagerService {
     }
     CommonDatabaseOperationService commonDatabaseOperationService = commonOperationFactory.createCommonOperationService(args,
         hikariConfigFactory, operationsProviders, messageService);
-    dbProcessService.process(args, commonDatabaseOperationService);
+    boolean result = dbProcessService.process(args, commonDatabaseOperationService);
+    if(!result){
+      throw new DbUpdateException();
+    }
   }
 
 

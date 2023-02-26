@@ -1,5 +1,6 @@
 package ru.npn.dbmanger.service.help;
 
+import lombok.NonNull;
 import ru.npn.dbmanger.model.commandline.CommandLineArgs;
 
 /**
@@ -16,6 +17,6 @@ public interface HelpService {
    * @return true если ключ получения справки присутствовал в аргументах командной строки
    * иначе false
    */
-  boolean process(CommandLineArgs args);
+  boolean process(@NonNull CommandLineArgs args);
 
 }
