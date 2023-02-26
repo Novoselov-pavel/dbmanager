@@ -27,6 +27,7 @@ import java.util.Objects;
 @Service
 public class LiquibaseOperationProviderImpl implements LiquibaseOperationProvider {
   private static final Logger logger = LogManager.getLogger(LiquibaseOperationProviderImpl.class);
+
   @Override
   public @NonNull CommandLineOperation getOperation() {
     return CommandLineOperation.UPDATE;

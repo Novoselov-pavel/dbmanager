@@ -1,6 +1,5 @@
 package ru.npn.dbmanger.service.db.operation;
 
-import com.zaxxer.hikari.HikariDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.util.Assert;
@@ -11,6 +10,7 @@ import ru.npn.dbmanger.model.operation.SqlExpression;
 import ru.npn.dbmanger.service.db.sql.SqlStatementRunner;
 import ru.npn.dbmanger.service.message.MessageService;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Comparator;
@@ -29,17 +29,17 @@ public class CommonDatabaseOperationServiceImpl implements CommonDatabaseOperati
   private static final String COMMON_OPERATION_IS_ABSENT = "common.operation.is.absent";
 
 
-  private final HikariDataSource hikariDataSource;
+  private final DataSource dataSource;
   private final List<CommonOperationProvider> operations;
   private final MessageService messageService;
 
   private final CommandLineArgs args;
 
-  public CommonDatabaseOperationServiceImpl(HikariDataSource hikariDataSource,
+  public CommonDatabaseOperationServiceImpl(DataSource dataSource,
                                             List<CommonOperationProvider> operations,
                                             MessageService messageService,
                                             CommandLineArgs args) {
-    this.hikariDataSource = hikariDataSource;
+    this.dataSource = dataSource;
     this.operations = operations;
     this.messageService = messageService;
     this.args = args;
@@ -47,7 +47,7 @@ public class CommonDatabaseOperationServiceImpl implements CommonDatabaseOperati
 
   @Override
   public boolean processCommonOperations() {
-    if(Objects.isNull(hikariDataSource)){
+    if(Objects.isNull(dataSource)){
       return false;
     }
     if (!CommandLineOperation.hasCommonDatabaseOperation(args.operations())) {
@@ -87,7 +87,7 @@ public class CommonDatabaseOperationServiceImpl implements CommonDatabaseOperati
 
 
   private boolean runInTransaction(final CommonOperationProvider operation) {
-    try (Connection connection = hikariDataSource.getConnection()) {
+    try (Connection connection = dataSource.getConnection()) {
       connection.setAutoCommit(false);
       for (SqlExpression expression : operation.getExpressions(args)) {
         SqlStatementRunner.runExpression(messageService, connection, expression);
