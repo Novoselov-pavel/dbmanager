@@ -48,7 +48,7 @@ public class LiquibaseOperationProviderImpl implements LiquibaseOperationProvide
         database.setLiquibaseSchemaName(args.schema());
       }
       try(Liquibase liquibase = new Liquibase(getFileName(args.changelogPath()), new FileSystemResourceAccessor(getRootDirectory(args.changelogPath())), database)) {
-        liquibase.update("main");
+        liquibase.update("update");
       }
     } catch (LiquibaseException | SQLException e) {
       logger.error(e.getMessage(), e);

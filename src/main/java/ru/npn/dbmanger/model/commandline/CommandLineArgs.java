@@ -32,21 +32,23 @@ public record CommandLineArgs(@NonNull Set<CommandLineOperation> operations,
                               @Nullable DatabaseType databaseType,
                               @Nullable String changelogPath,
                               @NonNull Map<String, String> additionalProperties) {
-  public String argumentToPrettyString(){
-    return "Command line arguments: " + System.lineSeparator() +
-        "operations=" + operations + "," + System.lineSeparator() +
-        getOptionPrettyString(CommandLineOption.DB_URL, dbUrl) +
+
+  public String optionsPrettyString(){
+    return getOptionPrettyString(CommandLineOption.DB_URL, dbUrl) +
         getOptionPrettyString(CommandLineOption.ADMIN_USERNAME, adminUserName) +
         getOptionPrettyString(CommandLineOption.ADMIN_PASSWORD, adminPassword) +
         getOptionPrettyString(CommandLineOption.DB_USERNAME, dbUserName) +
         getOptionPrettyString(CommandLineOption.DB_USER_PASSWORD, dbUserPassword) +
-        getOptionPrettyString(CommandLineOption.DB_NAME, dbUserPassword) +
-        getOptionPrettyString(CommandLineOption.DB_SCHEMA, dbUserPassword) +
-        getOptionPrettyString(CommandLineOption.CHANGELOG_PATH, changelogPath) +
-        getOptionPrettyString(CommandLineOption.CHANGELOG_PATH, changelogPath);
+        getOptionPrettyString(CommandLineOption.DB_NAME, dbName) +
+        getOptionPrettyString(CommandLineOption.DB_SCHEMA, schema) +
+        getOptionEndPrettyString(CommandLineOption.CHANGELOG_PATH, changelogPath);
   }
 
   public String getOptionPrettyString(CommandLineOption option, String value){
-    return option.getOptionName() + "=" + value + "," + System.lineSeparator();
+    return "\t\t" + option.getOptionName() + "=" + value + "," + System.lineSeparator();
+  }
+
+  public String getOptionEndPrettyString(CommandLineOption option, String value){
+    return "\t\t" + option.getOptionName() + "=" + value;
   }
 }

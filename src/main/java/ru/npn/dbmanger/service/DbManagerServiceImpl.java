@@ -45,7 +45,7 @@ public class DbManagerServiceImpl implements DbManagerService {
     }
     try {
       validator.validate(args);
-      messageService.logInfo(LOG_SETTING, new String[]{args.argumentToPrettyString()});
+      messageService.logInfo(LOG_SETTING, new String[]{args.operations().toString(), args.optionsPrettyString()});
     } catch (CommandLineArgValidationException e) {
       messageService.log(e);
       return;

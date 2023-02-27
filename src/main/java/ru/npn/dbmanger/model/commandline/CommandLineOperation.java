@@ -11,12 +11,12 @@ import java.util.*;
  */
 public enum CommandLineOperation {
 
-  HELP("h", "help", 0, false, true),
-  DROP_SCHEMA("ds", "dropSchema", 1, true, false),
-  DROP_DB("db", "dropDb", 2, true, false),
-  CREATE_DB("cd", "createDb", 3, true, false),
-  CREATE_SCHEMA("cs", "createShema", 4, true, false),
-  UPDATE("u", "update", 5, false, false);
+  HELP("h", "help", 0, false, true, "operation.help"),
+  DROP_SCHEMA("ds", "dropSchema", 1, true, false, "operation.dropSchema"),
+  DROP_DB("db", "dropDb", 2, true, false, "operation.dropDb"),
+  CREATE_DB("cd", "createDb", 3, true, false, "operation.createDb"),
+  CREATE_SCHEMA("cs", "createSchema", 4, true, false, "operation.createSchema"),
+  UPDATE("u", "update", 5, false, false, "operation.update");
 
   private final String shortOperationName;
 
@@ -25,27 +25,30 @@ public enum CommandLineOperation {
   private final int order;
   private final boolean isCommonOperation;
   private final boolean isHelpOperation;
+  private final String descriptionKey;
 
   /**
    * Описывает доступные операции для выполнения
    *
-   *
-   * @param shortOperationName сокращение операции
+   *  @param shortOperationName сокращение операции
    * @param fullOperationName полное наименование операции
    * @param order порядок выполнения операции
    * @param isCommonOperation определяет, является ли операция общей операцией над базой данных
    * @param isHelpOperation определяет, является ли операция вызовом справки
+   * @param descriptionKey ключ описания операции
    **/
   CommandLineOperation(@NonNull final String shortOperationName,
                        @NonNull final String fullOperationName,
                        int order,
                        boolean isCommonOperation,
-                       boolean isHelpOperation) {
+                       boolean isHelpOperation,
+                       @NonNull String descriptionKey) {
     this.shortOperationName = shortOperationName;
     this.fullOperationName = fullOperationName;
     this.order = order;
     this.isCommonOperation = isCommonOperation;
     this.isHelpOperation = isHelpOperation;
+    this.descriptionKey = descriptionKey;
   }
 
   private static final Map<String, CommandLineOperation> OPERATION_LOW_CASE_MAP = new HashMap<>();
@@ -78,6 +81,10 @@ public enum CommandLineOperation {
 
   public String getFullOperationName() {
     return fullOperationName;
+  }
+
+  public String getDescriptionKey() {
+    return descriptionKey;
   }
 
   public static List<CommandLineOperation> getListByOrder() {
