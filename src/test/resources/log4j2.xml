@@ -2,7 +2,6 @@
 <Configuration status="warn" >
     <Appenders>
         <Console name="ConsoleAppender" target="SYSTEM_OUT">
-            <DQLayout format="text"/>
         </Console>               
     </Appenders>
     <Loggers>
