@@ -11,19 +11,21 @@ import java.util.Map;
  * @author Новоселов Павел
  */
 public enum CommandLineOption {
-  DB_URL("url"),
-  DB_USERNAME("userName"),
-  DB_USER_PASSWORD("userPassword"),
-  ADMIN_USERNAME("admin"),
-  ADMIN_PASSWORD("adminPassword"),
-  DB_NAME("database"),
-  DB_SCHEMA("schema"),
-  CHANGELOG_PATH("changelog");
+  DB_URL("url", "option.url"),
+  DB_USERNAME("userName", "option.userName"),
+  DB_USER_PASSWORD("userPassword", "option.userPassword"),
+  ADMIN_USERNAME("admin", "option.admin"),
+  ADMIN_PASSWORD("adminPassword", "option.adminPassword"),
+  DB_NAME("database", "option.database"),
+  DB_SCHEMA("schema", "option.schema"),
+  CHANGELOG_PATH("changelog", "option.changelog");
 
   private final String optionName;
+  private final String descriptionKey;
 
-  CommandLineOption(@NonNull String optionName) {
+  CommandLineOption(@NonNull String optionName, @NonNull String descriptionKey) {
     this.optionName = optionName;
+    this.descriptionKey = descriptionKey;
   }
 
   private static final Map<String, CommandLineOption> LOW_CASE_OPTION_MAP = new HashMap<>();
@@ -32,7 +34,6 @@ public enum CommandLineOption {
     for (CommandLineOption value : CommandLineOption.values()) {
       LOW_CASE_OPTION_MAP.put(value.getOptionName().toLowerCase(), value);
     }
-
   }
 
 
@@ -55,5 +56,9 @@ public enum CommandLineOption {
 
   public String getOption() {
     return "--" + optionName;
+  }
+
+  public String getDescriptionKey() {
+    return descriptionKey;
   }
 }
