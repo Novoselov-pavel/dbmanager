@@ -51,5 +51,5 @@ virtualbox скачивается отсюда: https://www.virtualbox.org/wiki/
     docker-machine create --driver virtualbox --virtualbox-memory "2048" --virtualbox-hostonly-cidr 192.168.56.1/21 default
 
 BPM схема процесса см. <a href="/doc/Описание процесса работы сервиса.bpmn">Описание процесса работы сервиса.bpmn</a>.
-Открывается с помощью camunda modeler/
+Открывается с помощью camunda modeler.
 
