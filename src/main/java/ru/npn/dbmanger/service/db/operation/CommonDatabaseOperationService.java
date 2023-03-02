@@ -1,4 +1,4 @@
-package ru.npn.dbmanger.service.operation;
+package ru.npn.dbmanger.service.db.operation;
 
 /**
  * Служба выполнения общих операций над базой данных (создание базы и схемы, пользователя, удаление базы, схемы)

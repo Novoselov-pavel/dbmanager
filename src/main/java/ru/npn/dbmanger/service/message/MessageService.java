@@ -22,12 +22,20 @@ public interface MessageService {
    * @param code код из resource bundle
    * @param args аргументы
    */
-  void logInfo(String code, @Nullable Object[] args);
+  void logInfo(String code, Object... args);
 
   /**
    * Логирует сообщение с уровнем Error
    * @param code код из resource bundle
    * @param args аргументы
    */
-  void logError(String code, @Nullable Object[] args);
+  void logError(String code, Object... args);
+
+  /**
+   * Возвращает строковое значение сообщения с учетом локали запущенного приложения
+   * @param code код из resource bundle
+   * @param args аргументы
+   * @return локализованное сообщение
+   */
+  String getMessageString(String code, Object... args);
 }

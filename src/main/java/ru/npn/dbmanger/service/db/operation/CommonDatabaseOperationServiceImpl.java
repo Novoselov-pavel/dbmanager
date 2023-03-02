@@ -1,18 +1,17 @@
-package ru.npn.dbmanger.service.operation;
+package ru.npn.dbmanger.service.db.operation;
 
-import com.zaxxer.hikari.HikariDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.Assert;
 import ru.npn.dbmanger.model.commandline.CommandLineArgs;
 import ru.npn.dbmanger.model.commandline.CommandLineOperation;
 import ru.npn.dbmanger.model.commandline.DatabaseType;
 import ru.npn.dbmanger.model.operation.SqlExpression;
+import ru.npn.dbmanger.service.db.sql.SqlStatementRunner;
 import ru.npn.dbmanger.service.message.MessageService;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
@@ -30,17 +29,17 @@ public class CommonDatabaseOperationServiceImpl implements CommonDatabaseOperati
   private static final String COMMON_OPERATION_IS_ABSENT = "common.operation.is.absent";
 
 
-  private final HikariDataSource hikariDataSource;
+  private final DataSource dataSource;
   private final List<CommonOperationProvider> operations;
   private final MessageService messageService;
 
   private final CommandLineArgs args;
 
-  public CommonDatabaseOperationServiceImpl(@Qualifier("dataSourceForCommonOperation") HikariDataSource hikariDataSource,
+  public CommonDatabaseOperationServiceImpl(DataSource dataSource,
                                             List<CommonOperationProvider> operations,
                                             MessageService messageService,
                                             CommandLineArgs args) {
-    this.hikariDataSource = hikariDataSource;
+    this.dataSource = dataSource;
     this.operations = operations;
     this.messageService = messageService;
     this.args = args;
@@ -48,7 +47,7 @@ public class CommonDatabaseOperationServiceImpl implements CommonDatabaseOperati
 
   @Override
   public boolean processCommonOperations() {
-    if(Objects.isNull(hikariDataSource)){
+    if(Objects.isNull(dataSource)){
       return false;
     }
     if (!CommandLineOperation.hasCommonDatabaseOperation(args.operations())) {
@@ -59,7 +58,7 @@ public class CommonDatabaseOperationServiceImpl implements CommonDatabaseOperati
         .sorted(Comparator.naturalOrder())
         .toList();
 
-    final DatabaseType databaseType = DatabaseType.getTypeFromDbUrl(args.dbUrl());
+    final DatabaseType databaseType = args.databaseType();
     Assert.notNull(databaseType, "DatabaseType can't be null");
 
     messageService.logInfo(COMMON_OPERATIONS_START, new String[]{commonOperationByPriority.toString()});
@@ -88,10 +87,10 @@ public class CommonDatabaseOperationServiceImpl implements CommonDatabaseOperati
 
 
   private boolean runInTransaction(final CommonOperationProvider operation) {
-    try (Connection connection = hikariDataSource.getConnection()) {
+    try (Connection connection = dataSource.getConnection()) {
       connection.setAutoCommit(false);
       for (SqlExpression expression : operation.getExpressions(args)) {
-        runExpression(connection, expression);
+        SqlStatementRunner.runExpression(messageService, connection, expression);
       }
       connection.commit();
     } catch (SQLException e) {
@@ -101,13 +100,4 @@ public class CommonDatabaseOperationServiceImpl implements CommonDatabaseOperati
     return true;
   }
 
-
-  private void runExpression(Connection connection, SqlExpression expression) throws SQLException {
-    try (PreparedStatement statement = connection.prepareStatement(expression.sqlExpression())) {
-      statement.execute();
-      if(Objects.nonNull(expression.messageCode())){
-        messageService.logInfo(expression.messageCode(), expression.args());
-      }
-    }
-  }
 }

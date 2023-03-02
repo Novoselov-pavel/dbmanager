@@ -17,25 +17,28 @@ import java.util.Locale;
 @RequiredArgsConstructor
 public class MessageServiceImpl implements MessageService {
   private static final Logger logger = LogManager.getLogger(MessageServiceImpl.class);
+  private static final Locale locale = LocaleContextHolder.getLocale();
   private final MessageSource messageSource;
 
   @Override
   public void log(CommandLineArgValidationException exception) {
-    Locale locale = LocaleContextHolder.getLocale();
     for (CommandLineArgValidationException.ExceptionReason reason : exception.getExceptionReasons()) {
       logger.error(messageSource.getMessage(reason.reason(), reason.args(), locale));
     }
   }
 
   @Override
-  public void logInfo(String code, Object[] args) {
-    Locale locale = LocaleContextHolder.getLocale();
-    logger.info(messageSource.getMessage(code, args, locale));
+  public void logInfo(String code, Object... args) {
+    logger.info(getMessageString(code, args));
   }
 
   @Override
-  public void logError(String code, Object[] args) {
-    Locale locale = LocaleContextHolder.getLocale();
-    logger.error(messageSource.getMessage(code, args, locale));
+  public void logError(String code, Object... args) {
+    logger.error(getMessageString(code, args));
+  }
+
+  @Override
+  public String getMessageString(String code, Object... args) {
+    return messageSource.getMessage(code, args, locale);
   }
 }

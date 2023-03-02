@@ -6,4 +6,3 @@ logging:
   level:
     root: ERROR
     ru.npn: INFO
-
