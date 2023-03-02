@@ -45,10 +45,10 @@ public class DbManagerServiceImpl implements DbManagerService {
     }
     try {
       validator.validate(args);
-      messageService.logInfo(LOG_SETTING, new String[]{args.operations().toString(), args.optionsPrettyString()});
+      messageService.logInfo(LOG_SETTING, args.operations().toString(), args.optionsPrettyString());
     } catch (CommandLineArgValidationException e) {
       messageService.log(e);
-      return;
+      throw new DbUpdateException();
     }
     CommonDatabaseOperationService commonDatabaseOperationService = commonOperationFactory.createCommonOperationService(args,
         hikariConfigFactory, operationsProviders, messageService);

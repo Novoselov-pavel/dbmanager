@@ -46,15 +46,15 @@ public class DbProcessServiceImpl implements DbProcessService {
     HikariDataSource dataSource = hikariDatasourceLiquibaseBuilder.build(args, hikariConfigFactory);
 
     for (CommandLineOperation operation : commandLineOperations) {
-      messageService.logInfo(START_OPERATION_CODE, new String[]{operation.toString()});
+      messageService.logInfo(START_OPERATION_CODE, operation.toString());
       LiquibaseOperationProvider operationProvider = getProviderForOperation(operation, args.databaseType());
       if (isNull(operationProvider)) {
         String databaseType = args.databaseType() == null ? "null" : args.databaseType().toString();
-        messageService.logError(ERROR_PROVIDER_NOT_FOUND_CODE, new String[]{databaseType, operation.toString()});
+        messageService.logError(ERROR_PROVIDER_NOT_FOUND_CODE, databaseType, operation.toString());
         return false;
       }
       operationProvider.process(dataSource, args);
-      messageService.logInfo(END_OPERATION_CODE, new String[]{operation.toString()});
+      messageService.logInfo(END_OPERATION_CODE, operation.toString());
     }
     return true;
   }

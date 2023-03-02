@@ -30,6 +30,26 @@
 
 Пример liquibase скриптов:  <a href="/ChangelogExample/rootChangeLog.xml">rootChangeLog.xml</a>
 
-###Информация для разработчика
+###Информация для разработчиков
 
+Тесты в классе PostgresOperationProviderTest используют библиотеку otj-pg-embedded, для их корректной работы, необходимо:
++ установить docker
++ установить virtualbox
++ установить docker-machine
++ создать локальный сертификат ssl
++ создать новую виртуальную машину (на нее и будет разворачиваться otj-pg-embedded при старте теста)
+
+для ubuntu
+virtualbox скачивается отсюда: https://www.virtualbox.org/wiki/Linux_Downloads
+
+Установка docker-machine, создание сертификата и создание виртуальной машины выполняется из командной строки, версию docker-machine брать последнюю из репозитория:
+
+    base=https://github.com/docker/machine/releases/download/v0.16.2 && curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo mv /tmp/docker-machine /usr/local/bin/docker-machine && chmod +x /usr/local/bin/docker-machine
+
+    openssl req -newkey rsa:4096 -nodes -sha256 -keyout certs/dockerrepo.key -x509 -days 365 -out certs/dockerrepo.crt -subj /CN=local-registry
+
+    docker-machine create --driver virtualbox --virtualbox-memory "2048" --virtualbox-hostonly-cidr 192.168.56.1/21 default
+
+BPM схема процесса см. <a href="/doc/Описание процесса работы сервиса.bpmn">Описание процесса работы сервиса.bpmn</a>.
+Открывается с помощью camunda modeler/
 
