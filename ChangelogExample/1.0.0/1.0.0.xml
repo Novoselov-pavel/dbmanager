@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	
+    <property name="autoIncrement" value="false" dbms="postgresql,mssql,oracle"/>
+    <property name="autoIncrement" value="true" dbms="h2"/>
+
+    <changeSet id="create_test_table" author="novosselov.pavel@gmail.com">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="test_table"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="test_table_id_seq" incrementBy="1" startValue="1"/>
+
+        <createTable tableName="test_table" remarks="Тестовая таблица">
+            <column name="testtableid" type="numeric(15,0)" defaultValueSequenceNext="test_table_id_seq">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_test_table"/>
+            </column>
+            <column name="name" type="VARCHAR(255)" remarks="Наименование">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addColumn tableName="test_table">
+            <column name="col" type="VARCHAR(255)"></column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="add_column_test_table" author="novosselov.pavel@gmail.com">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="test_table"/>
+                <not>
+                    <columnExists tableName="test_table" columnName="col"/>
+                </not>
+            </and>
+        </preConditions>
+        <addColumn tableName="test_table">
+            <column name="col" type="VARCHAR(255)"></column>
+        </addColumn>
+    </changeSet>
+		
+</databaseChangeLog>
