@@ -1,4 +1,4 @@
-package ru.npn.dbmanger.service.operation.liquibase;
+package ru.npn.dbmanger.service.db.operation.liquibase;
 
 import liquibase.Liquibase;
 import liquibase.database.Database;
@@ -27,6 +27,7 @@ import java.util.Objects;
 @Service
 public class LiquibaseOperationProviderImpl implements LiquibaseOperationProvider {
   private static final Logger logger = LogManager.getLogger(LiquibaseOperationProviderImpl.class);
+
   @Override
   public @NonNull CommandLineOperation getOperation() {
     return CommandLineOperation.UPDATE;
@@ -47,7 +48,7 @@ public class LiquibaseOperationProviderImpl implements LiquibaseOperationProvide
         database.setLiquibaseSchemaName(args.schema());
       }
       try(Liquibase liquibase = new Liquibase(getFileName(args.changelogPath()), new FileSystemResourceAccessor(getRootDirectory(args.changelogPath())), database)) {
-        liquibase.update("main");
+        liquibase.update("update");
       }
     } catch (LiquibaseException | SQLException e) {
       logger.error(e.getMessage(), e);

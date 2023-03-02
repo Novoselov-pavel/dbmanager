@@ -1,4 +1,4 @@
-package ru.npn.dbmanger.service.operation.postgres;
+package ru.npn.dbmanger.service.db.operation.postgres;
 
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
@@ -6,7 +6,7 @@ import ru.npn.dbmanger.model.commandline.CommandLineArgs;
 import ru.npn.dbmanger.model.commandline.CommandLineOperation;
 import ru.npn.dbmanger.model.commandline.DatabaseType;
 import ru.npn.dbmanger.model.operation.SqlExpression;
-import ru.npn.dbmanger.service.operation.CommonOperationProvider;
+import ru.npn.dbmanger.service.db.operation.CommonOperationProvider;
 
 import java.util.ArrayList;
 import java.util.List;

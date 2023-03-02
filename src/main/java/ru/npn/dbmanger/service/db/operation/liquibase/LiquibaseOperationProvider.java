@@ -1,4 +1,4 @@
-package ru.npn.dbmanger.service.operation.liquibase;
+package ru.npn.dbmanger.service.db.operation.liquibase;
 
 import lombok.NonNull;
 import ru.npn.dbmanger.model.commandline.CommandLineArgs;

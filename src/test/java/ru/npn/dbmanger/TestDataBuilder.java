@@ -18,11 +18,11 @@ public class TestDataBuilder {
     Set<CommandLineOperation> operations = new HashSet<>();
     operations.add(CommandLineOperation.UPDATE);
     String dbUrl = DatabaseType.POSTGRES.getGetDatabaseUrlSimple();
-    String adminUserName = "admin";
-    String adminPassword = "admin";
-    String dbUserName = "user";
-    String dbUserPassword = "user";
-    String dbName = "dbname-test-absent-db-rsdfh";
+    String adminUserName = "postgres";
+    String adminPassword = "postgres";
+    String dbUserName = "testuser";
+    String dbUserPassword = "testuser";
+    String dbName = "testdb";
     String schema = "dnschema";
     return new CommandLineArgs(operations,
         dbUrl,
@@ -42,11 +42,11 @@ public class TestDataBuilder {
     Set<CommandLineOperation> operations = new HashSet<>();
     operations.add(CommandLineOperation.CREATE_SCHEMA);
     String dbUrl = DatabaseType.POSTGRES.getGetDatabaseUrlSimple();
-    String adminUserName = "admin";
-    String adminPassword = "admin";
-    String dbUserName = "user";
-    String dbUserPassword = "user";
-    String dbName = "dbname-test-absent-db-rsdfh";
+    String adminUserName = "postgres";
+    String adminPassword = "postgres";
+    String dbUserName = "testuser";
+    String dbUserPassword = "testuser";
+    String dbName = "testdb";
     String schema = "dnschema";
     return new CommandLineArgs(operations,
         dbUrl,

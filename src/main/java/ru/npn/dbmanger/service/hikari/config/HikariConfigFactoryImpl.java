@@ -28,8 +28,8 @@ public class HikariConfigFactoryImpl implements HikariConfigFactory {
     if (Objects.nonNull(args.schema())) {
       config.addDataSourceProperty("dataSource.schema", args.schema());
     }
-    config.setUsername(args.adminUserName());
-    config.setPassword(args.adminPassword());
+    config.setUsername(args.dbUserName());
+    config.setPassword(args.dbUserPassword());
     config.setMaximumPoolSize(MAX_POOL_SIZE);
     config.setConnectionInitSql(INIT_SQL);
     config.setConnectionTestQuery(TEST_QUERY);

@@ -53,7 +53,7 @@ class CommandLineOperationTest {
         prevVal = operations.get(i).getOrder();
       } else {
         int curVal = operations.get(i).getOrder();
-        assertThat(curVal>prevVal).isTrue();
+        assertThat(curVal).isGreaterThan(prevVal);
         prevVal = curVal;
       }
     }
